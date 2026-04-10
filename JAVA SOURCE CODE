@@ -1,0 +1,119 @@
+import java.util.*; 
+ 
+class Student { 
+    int id; 
+    String name; 
+    String department; 
+    double grade; 
+ 
+    Student(int id, String name, String department, double grade) { 
+        this.id = id; 
+        this.name = name; 
+        this.department = department; 
+        this.grade = grade; 
+    } 
+ 
+    @Override 
+    public String toString() { 
+        return "ID: " + id + ", Name: " + name + ", Dept: " + department + ", Grade: " + grade; 
+    } 
+} 
+ 
+public class StudentRecordSystem { 
+    static Map<Integer, Student> studentDB = new HashMap<>(); 
+    static Scanner sc = new Scanner(System.in); 
+ 
+    public static void main(String[] args) { 
+        int choice; 
+        do { 
+            System.out.println("\n--- Department Student Record Management ---"); 
+            System.out.println("1. Add Student"); 
+            System.out.println("2. Update Student"); 
+            System.out.println("3. Delete Student"); 
+            System.out.println("4. Search Student"); 
+            System.out.println("5. Display All Students"); 
+            System.out.println("6. Exit"); 
+            System.out.print("Enter choice: "); 
+            choice = sc.nextInt(); 
+ 
+            switch (choice) { 
+                case 1: addStudent(); break; 
+                case 2: updateStudent(); break; 
+                case 3: deleteStudent(); break; 
+                case 4: searchStudent(); break; 
+                case 5: displayAll(); break; 
+                case 6: System.out.println("Exiting..."); break; 
+                default: System.out.println("Invalid choice!"); 
+            } 
+        } while (choice != 6); 
+    } 
+ 
+    static void addStudent() { 
+        System.out.print("Enter ID: "); 
+        int id = sc.nextInt(); 
+        sc.nextLine(); // consume newline 
+        System.out.print("Enter Name: "); 
+        String name = sc.nextLine(); 
+        System.out.print("Enter Department: "); 
+        String dept = sc.nextLine(); 
+        System.out.print("Enter Grade: "); 
+        double grade = sc.nextDouble(); 
+ 
+        studentDB.put(id, new Student(id, name, dept, grade)); 
+        System.out.println("Student added successfully!"); 
+    } 
+ 
+    static void updateStudent() { 
+        System.out.print("Enter ID to update: "); 
+        int id = sc.nextInt(); 
+        if (studentDB.containsKey(id)) { 
+            sc.nextLine(); 
+            System.out.print("Enter New Name: "); 
+            String name = sc.nextLine(); 
+            System.out.print("Enter New Department: "); 
+            String dept = sc.nextLine(); 
+            System.out.print("Enter New Grade: "); 
+            double grade = sc.nextDouble(); 
+ 
+            studentDB.put(id, new Student(id, name, dept, grade)); 
+            System.out.println("Student updated successfully!"); 
+        } else { 
+            System.out.println("Student not found!"); 
+        } 
+    } 
+ 
+    static void deleteStudent() { 
+        System.out.print("Enter ID to delete: "); 
+        int id = sc.nextInt(); 
+        if (studentDB.remove(id) != null) { 
+            System.out.println("Student deleted successfully!"); 
+        } else { 
+            System.out.println("Student not found!"); 
+        } 
+    } 
+ 
+    static void searchStudent() { 
+        System.out.print("Enter ID to search: "); 
+        int id = sc.nextInt(); 
+        Student s = studentDB.get(id); 
+        if (s != null) { 
+            System.out.println("Found: " + s); 
+        } else { 
+            System.out.println("Student not found!"); 
+        } 
+    } 
+ 
+    static void displayAll() { 
+        if (studentDB.isEmpty()) { 
+            System.out.println("No records available."); 
+        } else { 
+            System.out.println("--- Student Records ---"); 
+            for (Student s : studentDB.values()) { 
+                System.out.println(s); 
+            } 
+        } 
+    } 
+} 
+ 
+ 
+ 
